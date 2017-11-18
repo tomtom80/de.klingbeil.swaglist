@@ -2,7 +2,10 @@ package de.klingbeil.swaglist.wishlist.application.repository;
 
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 import de.klingbeil.swaglist.wishlist.domain.WishItem;
+
+@Repository
 public class WishListRepository {
 
   public List<WishItem> findAll() {

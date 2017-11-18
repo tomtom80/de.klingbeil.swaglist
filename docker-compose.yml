@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  reverse_proxy:
+    build: ./reverse_proxy
+    user: nginx
+
+  wishlist:
+    build:
+       context: ./wishlist
+       dockerfile: Dockerfile
+    image: wishlist
+    user: tom
+    ports:
+      - "8080:8080" 
+      - "5005:5005"
+    networks:
+      - front-tier
+      - back-tier
+networks:
+  front-tier:
+  back-tier:

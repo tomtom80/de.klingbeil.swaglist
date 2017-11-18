@@ -17,10 +17,8 @@ site.conf
 .idea
 *.svn
 *.bat
-*.json
 *.bak
 linux.md
-src/
 
 ###################
 *.com

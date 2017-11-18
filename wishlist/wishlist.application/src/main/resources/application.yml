@@ -1,0 +1,15 @@
+---
+server:
+  port: 8080
+  contextPath: /
+---
+spring:
+  profiles: prod
+---
+spring:
+  profiles: dev
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true

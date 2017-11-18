@@ -9,21 +9,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Component
 public class WebConfiguration extends WebMvcConfigurerAdapter {
-	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/**").addResourceLocations("file:/static/");
-	}
-	
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("redirect:/index.html");
-	}
 
-        @Override
-        public void configurePathMatch(PathMatchConfigurer configurer) {
-        	AntPathMatcher matcher = new AntPathMatcher();
-        	matcher.setCaseSensitive(false);
-       		configurer.setPathMatcher(matcher);
-    	}
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/**").addResourceLocations("file:/static/");
+  }
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/").setViewName("redirect:/index.html");
+  }
+
+  @Override
+  public void configurePathMatch(PathMatchConfigurer configurer) {
+    AntPathMatcher matcher = new AntPathMatcher();
+    matcher.setCaseSensitive(false);
+    configurer.setPathMatcher(matcher);
+  }
 }

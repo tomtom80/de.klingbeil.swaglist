@@ -28,6 +28,7 @@
 		<module>wishlist.application</module>
 		<module>wishlist.utils</module>
 		<module>wishlist.security</module>
+		<module>wishlist.allTests</module>
 	</modules>
 
 	<dependencyManagement>
@@ -39,7 +40,7 @@
 			</dependency>
 			<dependency>
 				<groupId>de.klingbeil.swaglist</groupId>
-				<artifactId>wishlist.app</artifactId>
+				<artifactId>wishlist.application</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

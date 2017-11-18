@@ -13,9 +13,17 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <WishInput />
-        <WishList />
-      </div>
+        <div className="row">
+          <div className="col-12 mt-3">
+            <WishInput />
+          </div>
+        </div >
+        <div className="row mt-3">
+          <div className="col-12">
+            <WishList />
+          </div>
+        </div >
+      </div >
     );
   }
 }

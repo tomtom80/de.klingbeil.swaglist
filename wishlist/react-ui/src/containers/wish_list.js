@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchWishes } from '../actions'
 
 class WishList extends Component {
 
     componentWillMount() {
-        console.log(this.props.wishes);
+        this.props.fetchWishes();
     }
 
     render() {
@@ -23,13 +24,14 @@ class WishList extends Component {
 
     renderItem(wish) {
         return (
-            <li key={wish.id} className="list-group-item"><h5>{wish.name}</h5>{wish.url}</li>
+            <li key={wish.id} className="list-group-item"><h5>{wish.name}</h5>{wish.description}</li>
         )
     }
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return { wishes: state.wishes }
 }
 
-export default connect(mapStateToProps, null)(WishList);
+export default connect(mapStateToProps, { fetchWishes })(WishList);

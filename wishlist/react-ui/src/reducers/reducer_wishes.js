@@ -2,12 +2,10 @@ import _ from 'lodash';
 import { FETCH_WISHES, CREATE_WISH } from '../actions';
 
 export default function (state = {}, action) {
-    console.log("action:");
-    console.dir(action);
     let result = state;
     switch (action.type) {
         case FETCH_WISHES:
-            result = {}
+            result = _.mapKeys(action.payload.data, 'id')
             break;
         case CREATE_WISH:
             const id = _.uniqueId();
@@ -16,6 +14,5 @@ export default function (state = {}, action) {
             result = { ...state, [id]: wish }
             break;
     }
-    console.log(result);
     return result;
 }

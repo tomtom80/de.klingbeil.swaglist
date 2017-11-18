@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createWish } from '../actions'
+import { createWish } from '../actions';
 
 class WishInput extends Component {
 
@@ -15,7 +15,7 @@ class WishInput extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onFormSubmit} className="input-group input-group-lg wish-input-group">
+            <form onSubmit={this.onFormSubmit} className="input-group">
                 <input value={this.state.term} onChange={this.onInputChange} type="text" className="form-control" placeholder="Make a wish..." />
                 <span className="input-group-btn">
                     <button className="btn btn-primary" type="submit" >Add</button>

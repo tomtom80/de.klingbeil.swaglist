@@ -1,14 +1,16 @@
-
-
+import axios from 'axios';
 export const FETCH_WISHES = "fetch_wishes";
 export const CREATE_WISH = "create_wish";
 
-export function fetchWishes() {
-    const request = [];
+const ROOT_URL = "http://localhost:8080";
 
+export function fetchWishes() {
+    const url = `${ROOT_URL}/wishlist`;
+    const request = axios.get(url);
+    console.log(request);
     return {
         type: FETCH_WISHES,
-        paylaod: request
+        payload: request
     }
 }
 

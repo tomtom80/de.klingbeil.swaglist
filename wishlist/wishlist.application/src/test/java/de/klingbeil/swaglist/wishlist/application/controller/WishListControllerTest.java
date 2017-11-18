@@ -23,7 +23,7 @@ public class WishListControllerTest {
     MockitoAnnotations.initMocks(this);
     controller = new WishListController();
     controller.repository = repository;
-    wishItem = new WishItem.Builder("testItem").build();
+    wishItem = new WishItem.Builder("testid", "testItem").build();
   }
 
 

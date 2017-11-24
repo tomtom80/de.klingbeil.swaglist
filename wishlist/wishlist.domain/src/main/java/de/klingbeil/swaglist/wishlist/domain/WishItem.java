@@ -27,10 +27,11 @@ public class WishItem {
   }
 
   public static class Builder {
-
     private String name;
     private String description;
     private String id;
+
+    public Builder() {}
 
     public Builder(String id, String name) {
       Asserts.notNull("id", id);
@@ -42,6 +43,16 @@ public class WishItem {
 
     public WishItem build() {
       return new WishItem(this);
+    }
+
+    public Builder id(String id) {
+      this.id = id;
+      return this;
+    }
+
+    public Builder name(String name) {
+      this.name = name;
+      return this;
     }
 
     public Builder description(String description) {

@@ -29,6 +29,7 @@
 		<module>wishlist.utils</module>
 		<module>wishlist.security</module>
 		<module>wishlist.allTests</module>
+		<module>wishlist.api</module>
 	</modules>
 
 	<dependencyManagement>
@@ -51,6 +52,11 @@
 			<dependency>
 				<groupId>de.klingbeil.swaglist</groupId>
 				<artifactId>wishlist.security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.klingbeil.swaglist</groupId>
+				<artifactId>wishlist.api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

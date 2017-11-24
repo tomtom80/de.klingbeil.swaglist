@@ -1,6 +1,6 @@
 package de.klingbeil.swaglist.wishlist.domain;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class WishItemTest {
@@ -33,6 +33,15 @@ public class WishItemTest {
     WishItem item = new WishItem.Builder(ID, NAME).description(DESCRIPTION).build();
 
     assertEquals(DESCRIPTION, item.getDescription());
+  }
+  
+  @Test
+  public void testId() throws Exception {
+    
+    WishItem item = new WishItem.Builder(ID, NAME).build();
+
+    assertEquals(ID, item.getId());
+    assertEquals(NAME, item.getName());
   }
 
 }

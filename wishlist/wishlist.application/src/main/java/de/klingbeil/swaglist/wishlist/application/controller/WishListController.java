@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import de.klingbeil.swaglist.wishlist.api.model.WishItemDto;
-import de.klingbeil.swaglist.wishlist.application.repository.WishListService;
+import de.klingbeil.swaglist.wishlist.application.service.WishListService;
 import de.klingbeil.swaglist.wishlist.domain.WishItem;
 
 @RestController

@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.klingbeil.swaglist.wishlist.api.model.WishItemDto;
-import de.klingbeil.swaglist.wishlist.application.repository.WishListService;
+import de.klingbeil.swaglist.wishlist.application.service.WishListService;
 import de.klingbeil.swaglist.wishlist.domain.WishItem;
 import de.klingbeil.swaglist.wishlist.domain.WishItem.Builder;
 

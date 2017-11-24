@@ -15,7 +15,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import de.klingbeil.swaglist.wishlist.api.model.WishItemDto;
-import de.klingbeil.swaglist.wishlist.application.repository.WishListService;
+import de.klingbeil.swaglist.wishlist.application.service.WishListService;
 import de.klingbeil.swaglist.wishlist.domain.WishItem;
 
 public class WishListControllerTest<S> {

@@ -1,4 +1,4 @@
-package de.klingbeil.swaglist.wishlist.application.repository;
+package de.klingbeil.swaglist.wishlist.application.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

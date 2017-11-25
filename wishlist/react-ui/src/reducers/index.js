@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import WishesReducer from './reducer_wishes'
+import WishesReducer from './reducer_wishes';
 
 const rootReducer = combineReducers({
-    wishes : WishesReducer
+  wishes: WishesReducer,
 });
 
 export default rootReducer;

@@ -4,12 +4,13 @@ services:
   reverse_proxy:
     build: ./reverse_proxy
     user: nginx
+    image: swaglist_reverse_proxy
 
   wishlist:
     build:
        context: ./wishlist
        dockerfile: Dockerfile
-    image: wishlist
+    image: swaglist_wishlist
     user: tom
     ports:
       - "8080:8080" 

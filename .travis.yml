@@ -1,2 +1,4 @@
 language: java
 script:  cd wishlist && mvn package
+notifications:
+    slack: swagbuddies:FSsvfKY3hyayXmoqDT79d5H2

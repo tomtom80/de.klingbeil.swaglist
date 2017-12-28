@@ -6,8 +6,13 @@
 		<artifactId>wishlist.root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>wishlist.api</artifactId>
+	<artifactId>wishlist.persistence</artifactId>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
@@ -15,6 +20,11 @@
 		<dependency>
 			<groupId>de.klingbeil.swaglist</groupId>
 			<artifactId>wishlist.domain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

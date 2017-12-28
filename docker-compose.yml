@@ -5,6 +5,15 @@ services:
     build: ./reverse_proxy
     user: nginx
     image: swaglist_reverse_proxy
+  
+  wishlistdb:
+    image: mongo:latest
+    volumes:
+    - wishlist_data:/data/db
+    ports:
+      - "27017:27017" 
+    networks:
+      - back-tier
 
   wishlist:
     build:
@@ -18,6 +27,14 @@ services:
     networks:
       - front-tier
       - back-tier
+    depends_on:
+      - wishlistdb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://wishlistdb:27017/wishlistdb
 networks:
   front-tier:
   back-tier:
+
+volumes:
+  wishlist_data:
+    external: true

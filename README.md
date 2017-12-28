@@ -1,8 +1,8 @@
-#  SwagList Demonstration Application
+# SwagList Demonstration Application
 
-The SwagList App is a demonstration application comprised of: 
+The SwagList App is a demonstration application comprised of:
 
-* Java REST application written using Spring-Boot, 
+* Java REST application written using Spring-Boot,
 * a React fontend,
 * a NGINX reverse proxy implementing https,
 
@@ -22,7 +22,14 @@ openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key -x509 -days
 docker secret create revprox_cert certs/domain.crt
 
 docker secret create revprox_key certs/domain.key
+```
 
+## Docker volumes
+
+This application uses Docker volumes to store application data to the hosts filesystem. To create the required volume execute the following command:
+
+```
+docker volume create wishlist_data
 ```
 
 # Building and Running the SwagList
@@ -30,11 +37,13 @@ docker secret create revprox_key certs/domain.key
 ## Run as an application
 
 To run the SwagList App as an application:
+
 ```
 docker-compose up --build
 ```
 
 ## Deploy to a swarm
+
 ```
 #If you need to create a Swarm
 docker swarm init
@@ -42,15 +51,13 @@ docker stack deploy -c docker-stack.yml swaglist
 ```
 
 ## A simplified development environment
+
 This compose file creates a simplified development environment consisting of only the application server.
 
 ```
 docker-compose --file docker-compose-dev.yml up --build
 ```
 
-
-
 ## The SwagList App
 
 The URL for the content is `http://localhost:8080/`
-

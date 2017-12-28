@@ -2,6 +2,7 @@ package de.klingbeil.swaglist.wishlist.application.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.google.common.base.Predicates;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,7 +21,7 @@ public class SwaggerConfiguration {
       return new Docket(DocumentationType.SWAGGER_2)
               .select()
               .apis(RequestHandlerSelectors.basePackage("de.klingbeil.swaglist.wishlist"))
-              .paths(PathSelectors.ant("/wishlist*"))
+              .paths(Predicates.not(PathSelectors.regex("/error")))
               .build()
               .apiInfo(apiInfo());
   }

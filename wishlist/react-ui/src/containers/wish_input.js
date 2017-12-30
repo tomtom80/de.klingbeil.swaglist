@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createWish, fetchWish } from '../actions';
+import { scrapeDetails } from '../actions';
 
 class WishInput extends Component {
   constructor(props) {
@@ -16,10 +16,7 @@ class WishInput extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-
-    this.props.createWish(this.state.term, (id) => {
-      this.props.fetchWish(id);
-    });
+    this.props.scrapeDetails(this.state.term);
     this.setState({ term: '' });
   }
 
@@ -35,11 +32,11 @@ class WishInput extends Component {
         />
         <span className="input-group-btn">
           <button className="btn btn-primary" type="submit">
-            Add
+            Wish
           </button>
         </span>
       </form>
     );
   }
 }
-export default connect(null, { createWish, fetchWish })(WishInput);
+export default connect(null, { scrapeDetails })(WishInput);

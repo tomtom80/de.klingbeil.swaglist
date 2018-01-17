@@ -1,14 +1,22 @@
-import { SCRAPE_DETAILS } from '../actions';
+import { SCRAPE_DETAILS_REQUEST, SCRAPE_DETAILS_SUCCESS, SCRAPE_DETAILS_FAILURE } from '../actions';
 
-export default function (state = {}, action) {
-  let result = state;
+export function DetailsReducer(state = {}, action) {
   switch (action.type) {
-    case SCRAPE_DETAILS:
-      result = action.payload.data;
-      break;
+    case SCRAPE_DETAILS_SUCCESS:
+      return action.payload;
     default:
-      break;
+      return state;
   }
+}
 
-  return result;
+export function DetailsIsLoadingReducer(state = false, action) {
+  switch (action.type) {
+    case SCRAPE_DETAILS_REQUEST:
+      return true;
+    case SCRAPE_DETAILS_SUCCESS:
+    case SCRAPE_DETAILS_FAILURE:
+      return false;
+    default:
+      return state;
+  }
 }

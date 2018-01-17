@@ -3,3 +3,9 @@
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
+
+.spinner {
+  margin: 0 auto;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}

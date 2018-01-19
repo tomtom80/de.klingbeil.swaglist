@@ -1,6 +1,7 @@
 package de.klingbeil.swaglist.wishlist.application.service;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
@@ -64,9 +65,18 @@ public class WishListServiceImplTest {
     when(this.wishItemRepository.save(wishItemModel)).thenReturn(wishItemModel);
     mockModelToItemConversion();
 
-    WishItem result = service.create(wishItem);
+    WishItem result = service.persist(wishItem);
 
     assertEquals(wishItem, result);
+  }
+
+  @Test
+  public void testDelete() throws Exception {
+    when(this.modelMapper.map(wishItem, WishItemModel.class)).thenReturn(wishItemModel);
+
+    service.delete(wishItem);
+
+    verify(this.wishItemRepository).delete(wishItemModel);
   }
 
   private void mockModelToItemConversion() {

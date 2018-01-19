@@ -1,7 +1,8 @@
 package de.klingbeil.swaglist.wishlist.application.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,7 +27,7 @@ public class WishListControllerTest<S> {
   private static final String ROOT_URL = "http://localhost";
 
   @Mock
-  private WishListService repository;
+  private WishListService service;
   @Mock
   private ModelMapper modelMapper;
   @Mock
@@ -42,10 +44,10 @@ public class WishListControllerTest<S> {
     RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
     controller = new WishListController();
-    controller.service = repository;
+    controller.service = service;
     controller.modelMapper = modelMapper;
 
-    wishItem = new WishItem.Builder(ID,NAME).build();
+    wishItem = new WishItem.Builder(ID, NAME).build();
     wishItemDto = createWishItemDto();
   }
 
@@ -53,33 +55,65 @@ public class WishListControllerTest<S> {
   @Test
   public void testfindAll() throws Exception {
     List<WishItem> wishes = Arrays.asList(wishItem);
-    when(this.repository.findAll()).thenReturn(wishes);
-    when( this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
+    when(this.service.findAll()).thenReturn(wishes);
+    when(this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
 
-    List<WishItemDto> items = controller.findAll();
+    ResponseEntity<List<WishItemDto>> response = controller.findAll();
 
-    assertEquals(1, items.size());
-    assertEquals(this.wishItemDto, items.get(0));
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(1, response.getBody().size());
+    assertEquals(this.wishItemDto, response.getBody().get(0));
   }
+
+  @Test
+  public void testFindOne() throws Exception {
+    when(this.service.findOne(ID)).thenReturn(wishItem);
+    when(this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
+
+    ResponseEntity<WishItemDto> response = controller.findOne(ID);
+    
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertSame(wishItemDto, response.getBody());
+  }
+
 
   @Test
   public void testCreate() throws Exception {
-    when(this.repository.create(wishItem)).thenReturn(wishItem);
-    when( this.modelMapper.map(wishItemDto, WishItem.Builder.class)).thenReturn(wishItemBuilder);
-    when( this.wishItemBuilder.build()).thenReturn(wishItem);
-    
-    ResponseEntity<Void> response = controller.create(wishItemDto);
+    when(this.modelMapper.map(wishItemDto, WishItem.Builder.class)).thenReturn(wishItemBuilder);
+    when(this.wishItemBuilder.build()).thenReturn(wishItem);
+    when(this.service.persist(wishItem)).thenReturn(wishItem);
+    when(this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
 
-    assertEquals(ROOT_URL +"/"+ ID, response.getHeaders().getLocation().toString());
+    ResponseEntity<WishItemDto> response = controller.create(wishItemDto);
+
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(ROOT_URL + "/" + ID, response.getHeaders().getLocation().toString());
+    assertEquals(NAME, response.getBody().getName());
   }
 
 
   @Test
-  public void testCreateAndFind() throws Exception {
-    when(this.repository.findOne(ID)).thenReturn(wishItem);
-    when( this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
+  public void testUpdate() throws Exception {
+    when(this.modelMapper.map(wishItemDto, WishItem.Builder.class)).thenReturn(wishItemBuilder);
+    when(this.wishItemBuilder.build()).thenReturn(wishItem);
+    when(this.service.findOne(ID)).thenReturn(wishItem);
+    when(this.service.persist(any(WishItem.class))).thenReturn(wishItem);
+    when(this.modelMapper.map(wishItem, WishItemDto.class)).thenReturn(wishItemDto);
 
-    assertSame(wishItemDto, controller.findOne(ID));
+    ResponseEntity<WishItemDto> response = controller.update(ID, wishItemDto);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(NAME, response.getBody().getName());
+  }
+  
+  @Test
+  public void testDelete() throws Exception {
+    when(this.service.findOne(ID)).thenReturn(wishItem);
+
+    ResponseEntity<Void> response = controller.delete(ID);
+    
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    verify( this.service).delete( wishItem);
   }
 
   private WishItemDto createWishItemDto() {

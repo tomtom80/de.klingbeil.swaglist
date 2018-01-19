@@ -31,10 +31,16 @@ public class WishListServiceImpl implements WishListService {
   }
 
   @Override
-  public WishItem create(WishItem wishItem) {
+  public WishItem persist(WishItem wishItem) {
     WishItemModel itemModel = convertItemToModel(wishItem);
     WishItemModel wish = wishItemRepository.save(itemModel);
     return convertModelToItem(wish);
+  }
+
+  @Override
+  public void delete(WishItem wishItem) {
+    WishItemModel itemModel = convertItemToModel(wishItem);
+    wishItemRepository.delete(itemModel);
   }
 
   private WishItemModel convertItemToModel(WishItem wishItem) {

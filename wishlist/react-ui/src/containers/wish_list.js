@@ -1,24 +1,40 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchWishes } from '../actions';
+import { fetchWishes, deleteWish } from '../actions';
 
 class WishList extends Component {
-  static renderItem(wish) {
-    return (
-      <li key={wish.id} className="list-group-item">
-        <h5>{wish.name}</h5>
-        {wish.description}
-      </li>
-    );
-  }
-
   componentWillMount() {
     this.props.fetchWishes();
   }
 
+  delete(id) {
+    this.props.deleteWish(id);
+  }
+
+  renderItem(wish) {
+    return (
+      <li
+        key={wish.id}
+        className="list-group-item list-group-item-action flex-column align-items-start wishItem"
+      >
+        <div className="d-flex w-100 justify-content-between">
+          <h5 className="mb-1">{wish.name}</h5>
+          <i
+            className="fa fa-times fa-lg"
+            aria-hidden="true"
+            onClick={() => {
+              this.delete(wish.id);
+            }}
+          />
+        </div>
+        <p className="mb-1">{wish.description}</p>
+      </li>
+    );
+  }
+
   renderList() {
-    return _.map(this.props.wishes, wish => WishList.renderItem(wish));
+    return _.map(this.props.wishes, wish => this.renderItem(wish));
   }
 
   render() {
@@ -30,4 +46,4 @@ function mapStateToProps(state) {
   return { wishes: state.wishes };
 }
 
-export default connect(mapStateToProps, { fetchWishes })(WishList);
+export default connect(mapStateToProps, { fetchWishes, deleteWish })(WishList);

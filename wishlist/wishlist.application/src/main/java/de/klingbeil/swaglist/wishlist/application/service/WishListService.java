@@ -10,6 +10,8 @@ public interface WishListService {
 
   WishItem findOne(String id);
 
-  WishItem create(WishItem wishItem);
+  WishItem persist(WishItem wishItem);
+
+  void delete(WishItem wishItem);
 
 }

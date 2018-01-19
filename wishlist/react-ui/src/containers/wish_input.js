@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from 'react-spinkit';
-import { createWish, fetchDetails, fetchWish } from '../actions';
+import { fetchDetailsAndCreateWish, fetchWishes } from '../actions';
 
 class WishInput extends Component {
   constructor(props) {
@@ -18,15 +18,7 @@ class WishInput extends Component {
   onFormSubmit(event) {
     event.preventDefault();
     const { term } = this.state;
-    this.props.fetchDetails(term, (details) => {
-      let wish = { name: term };
-      if (details.successful) {
-        wish = { name: details.title, description: details.description };
-      }
-      this.props.createWish(wish, (id) => {
-        this.props.fetchWish(id);
-      });
-    });
+    this.props.fetchDetailsAndCreateWish(term);
     this.setState({ term: '' });
   }
 
@@ -70,4 +62,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { createWish, fetchDetails, fetchWish })(WishInput);
+export default connect(mapStateToProps, { fetchDetailsAndCreateWish, fetchWishes })(WishInput);

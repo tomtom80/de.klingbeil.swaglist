@@ -5,8 +5,11 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -79,13 +82,45 @@ public class WishListControllerIntegrationtest {
   @Test
   public void testCreate() throws Exception {
     String json = mapper.writeValueAsString(wishItemDto);
-    given(service.create(any(WishItem.class))).willReturn(wishItem);
     given(modelMapper.map(any(WishItemDto.class), eq(WishItem.Builder.class)))
         .willReturn(wishItemBuilder);
+    given(service.persist(any(WishItem.class))).willReturn(wishItem);
+    given(modelMapper.map(wishItem, WishItemDto.class)).willReturn(wishItemDto);
 
     mvc.perform(post("/wishlist").content(json).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
-        .andExpect(header().string("Location", "http://localhost/wishlist/" + wishItem.getId()));
+        .andExpect(header().string("Location", "http://localhost/wishlist/" + wishItem.getId()))
+        .andExpect(jsonPath("$.id", is(wishItem.getId())))
+        .andExpect(jsonPath("$.name", is(wishItemDto.getName())))
+        .andExpect(jsonPath("$.description", is(wishItemDto.getDescription())));
+  }
+
+  @Test
+  public void testUpdate() throws Exception {
+    String id = wishItem.getId();
+    String json = mapper.writeValueAsString(wishItemDto);
+    given(modelMapper.map(any(WishItemDto.class), eq(WishItem.Builder.class)))
+        .willReturn(wishItemBuilder);
+    given(service.findOne(id)).willReturn(wishItem);
+    given(service.persist(any(WishItem.class))).willReturn(wishItem);
+    given(modelMapper.map(wishItem, WishItemDto.class)).willReturn(wishItemDto);
+
+    mvc.perform(put("/wishlist/{id}", id).content(json).contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(id)))
+        .andExpect(jsonPath("$.name", is(wishItemDto.getName())))
+        .andExpect(jsonPath("$.description", is(wishItemDto.getDescription())));
+  }
+
+  @Test
+  public void testDelete() throws Exception {
+    given(service.findOne(wishItem.getId())).willReturn(wishItem);
+    given(service.persist(any(WishItem.class))).willReturn(wishItem);
+    given(modelMapper.map(any(WishItemDto.class), eq(WishItem.Builder.class)))
+        .willReturn(wishItemBuilder);
+
+    mvc.perform(delete("/wishlist/{id}", wishItem.getId())).andExpect(status().isOk());
+
+    verify(service).delete(wishItem);
   }
 
   private static WishItemDto createWishItemDto(String id, String name, String description) {

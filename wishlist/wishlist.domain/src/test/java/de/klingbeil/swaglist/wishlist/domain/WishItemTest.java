@@ -43,5 +43,20 @@ public class WishItemTest {
     assertEquals(ID, item.getId());
     assertEquals(NAME, item.getName());
   }
+  
+  @Test
+  public void testCopyConstructor() throws Exception {
+    WishItem item = new WishItem.Builder(ID, NAME).build();
+    
+    WishItem copyItem = new WishItem.Builder(item).build();
+
+    assertEquals(ID, copyItem.getId());
+    assertEquals(NAME, copyItem.getName());
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullItem() throws Exception {
+    new WishItem.Builder(null);
+  }
 
 }

@@ -41,6 +41,13 @@ public class WishItem {
       this.name = name;
     }
 
+    public Builder(WishItem wishItem) {
+      Asserts.notNull("wishItem", wishItem);
+
+      this.id = wishItem.getId();
+      this.name = wishItem.getName();
+    }
+
     public WishItem build() {
       return new WishItem(this);
     }

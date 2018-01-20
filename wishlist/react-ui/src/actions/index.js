@@ -38,10 +38,10 @@ export function createWish(wish) {
 
 export function deleteWish(id) {
   const url = `/wishlist/${id}`;
-  const request = axios.delete(url);
+  axios.delete(url);
   return {
     type: DELETE_WISH,
-    payload: request,
+    payload: id,
   };
 }
 

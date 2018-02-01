@@ -1,3 +1,7 @@
+nav {
+  margin-bottom: 30px;
+}
+
 .wishEditor {
   padding: 10px 10px;
   border: 1px solid #ced4da;
@@ -8,8 +12,4 @@
   margin: 0 auto;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-}
-
-.wishItem {
-  height: 8rem;
 }

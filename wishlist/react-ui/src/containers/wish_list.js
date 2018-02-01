@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import ReactPlaceholder from 'react-placeholder';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchWishes, deleteWish } from '../actions';
@@ -15,31 +14,29 @@ class WishList extends Component {
 
   renderItem(wish) {
     return (
-      <li
-        key={wish.id}
-        className="list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div className="row">
-          <div className="col-3">
-            <ReactPlaceholder type="rect" ready={false} color="#E0E0E0">
-              <p>Placeholder Replacement goes here</p>
-            </ReactPlaceholder>
+      <div className="col-lg-4 d-flex align-items-stretch">
+        <div key={wish.id} className="card mb-3">
+          <img className="card-img-top" src="..." alt="thumbnail" />
+          <div className="card-body">
+            <h5 className="card-title">{wish.name}</h5>
+            <p className="card-text">{wish.description}</p>
           </div>
-          <div className="col-8">
-            <h5 className="mb-1">{wish.name}</h5>
-            <p className="mb-1">{wish.description}</p>
-          </div>
-          <div className="col-1">
-            <i
-              className="fa fa-times fa-lg"
-              aria-hidden="true"
-              onClick={() => {
-                this.delete(wish.id);
-              }}
-            />
-          </div>
+          <footer className="card-footer">
+            <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+              <button
+                type="button"
+                className="close"
+                aria-label="Close"
+                onClick={() => {
+                  this.delete(wish.id);
+                }}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </footer>
         </div>
-      </li>
+      </div>
     );
   }
 
@@ -48,7 +45,11 @@ class WishList extends Component {
   }
 
   render() {
-    return <ul className="list-group">{this.renderList()}</ul>;
+    return (
+      <div className="container">
+        <div className="row">{this.renderList()}</div>{' '}
+      </div>
+    );
   }
 }
 

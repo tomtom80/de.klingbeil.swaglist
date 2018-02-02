@@ -4,7 +4,7 @@ addons:
     organization: "tomtom80-github"
     token:
       secure: "fn31twXSsGmCO6Iz+yErhSKmjCQsrJbanBJH0RVNPxmLPYRSWphghuTpzvqK+ZZwuUrnmraMwq7L2Iwi851Z4yhdvF9kwOpUcTVbSMnAREWs0YATfQ1hqKIxoPt3DcBZE7kHxsTjG70F78Co8uT8eOVuuzqm+XS5g9HI3MFTqgGYPTxm7lu2nDIriv6TxwjpeWFx2FvSc0xl2THPaJH+UFuAFb8Am3Rm/p9aSke5WkAQm+ORXg1rnq9M1n7wXgwA/5mWT3ZNXuqWcWRK22bnqf2UHut+mNI8BqM1H25zQonbAtuk8P6kFtd529rX+pvG+SciIRF4t0i8aMvANKtlzO9umS0WXrx0cgV+ZSgK25SSfp3FexGBCRHrHJBd4q6ScNRSwemxnrLeWfS3KPBvs8UAWcNk+Rovbf4RGBwb8aYWHO6Aak9qJcEAfGVDjj8RxULrWIqeytVZ2Et87H1pMjNs3R/ZoOQZUNOzu61p6Idjd5dzGFGRZuAT6lz5S6Qrj/hPTQzVcaNln7k5xe81ch4x+C2iLEi2cbY5qxcqyp++/jbs9POD6Y6MOq0jAdj+7F4wkeB1ckUSMXqD9eQII6rkV7iQerq0G/J4OZK3mcVbClkZJ17BceuBhkfTtGFwAsUdOknWO2FX8MWCz72QdsODQ2D0Ur/v833r2eze4m8="
-script:  cd wishlist && mvn package
+script:  cd wishlist && mvn package && mvn sonar:sonar
 
 notifications:
     slack: swagbuddies:FSsvfKY3hyayXmoqDT79d5H2

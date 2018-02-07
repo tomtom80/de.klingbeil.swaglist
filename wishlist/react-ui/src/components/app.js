@@ -7,7 +7,7 @@ export default function App() {
     <div>
       <div className="jumbotron">
         <div className="container">
-          <h1 className="display-4">Welcome to SwagList</h1>
+          <h1 className="display-4">Welcome to Swag List</h1>
           <p className="lead">Where wishes come true.</p>
           <hr className="my-4" />
           <p className="lead">

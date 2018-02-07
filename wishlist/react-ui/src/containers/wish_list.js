@@ -16,7 +16,7 @@ class WishList extends Component {
     return (
       <div className="col-lg-4 d-flex align-items-stretch">
         <div key={wish.id} className="card mb-3">
-          <img className="card-img-top" src="..." alt="thumbnail" />
+          <img className="card-img-top" src="assets/present.png" alt="thumbnail" />
           <div className="card-body">
             <h5 className="card-title">{wish.name}</h5>
             <p className="card-text">{wish.description}</p>

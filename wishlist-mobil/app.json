@@ -26,7 +26,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "de.klingbeil.swaglist"
     },
-    "entryPoint": "./src/App.js",
     "facebookScheme": "fb222807195303889",
     "facebookAppId": "222807195303889",
     "facebookDisplayName": "SwagList",

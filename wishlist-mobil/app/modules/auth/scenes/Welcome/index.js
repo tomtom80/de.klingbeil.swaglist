@@ -16,8 +16,8 @@ class Welcome extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.topContainer}>
-                    <Image style={styles.image} source={{uri: ""}}/>
-                    <Text style={styles.title}>Quotes</Text>
+                <Image style={styles.image} source={{uri: "https://img.icons8.com/ios/100/000000/wish-list.png"}}/>
+                    <Text style={styles.title}>SwagList</Text>
                 </View>
 
                 <View style={styles.bottomContainer}>

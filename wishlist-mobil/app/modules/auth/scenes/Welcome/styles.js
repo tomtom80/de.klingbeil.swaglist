@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     image:{
         height: 100,
         width: 100,
-        backgroundColor: color.white,
+        backgroundColor: "#FF553F",
         marginBottom: padding,
         resizeMode
     },

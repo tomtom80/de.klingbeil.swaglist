@@ -96,7 +96,7 @@ export function signInWithFacebook(fbToken,) {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
             const credential = provider.credential(fbToken);
-            auth.signInWithCredential(credential)
+            auth.signInAndRetrieveDataWithCredential(credential)
                 .then((user) => {
                     //Get the user object from the realtime database
                     database.ref('users').child(user.uid).once('value')

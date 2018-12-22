@@ -88,7 +88,7 @@ class Quote extends React.Component {
                             (loves && loves[user.uid]) ?
                                 'md-heart'
                                 :
-                                'md-heart-outline'
+                                'md-heart-empty'
                         }
                         type='ionicon'
                         color='#fff'

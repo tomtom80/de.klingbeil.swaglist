@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { Scene, Router, ActionConst, Stack, Modal, Tabs } from 'react-native-router-flux';
+import {Scene, Router, ActionConst, Stack, Modal, Tabs, Actions} from 'react-native-router-flux';
 
 //Splash Component
-import Splash from '../components/Splash';
+import Splash from '../components/Splash/Splash';
 
 //Authentication Scenes
 import Welcome from '../modules/auth/scenes/Welcome';
@@ -12,28 +12,53 @@ import CompleteProfile from '../modules/auth/scenes/CompleteProfile';
 import Login from '../modules/auth/scenes/Login';
 import ForgotPassword from '../modules/auth/scenes/ForgotPassword';
 import Home from '../modules/home/scenes/Home';
+import NewQuote from '../modules/home/scenes/NewQuote';
+
+import NavButton from '../components/NavButton';
+import SaveButton from '../modules/home/components/SaveButton';
 
 //Import Store, actions
 import store from '../redux/store'
-import { checkLoginStatus } from "../modules/auth/actions";
+import {checkLoginStatus} from "../modules/auth/actions";
 
-import { color, navTitleStyle } from "../styles/theme";
+import {color, navTitleStyle} from "../styles/theme";
 
 export default class extends React.Component {
     constructor() {
         super();
         this.state = {
             isReady: false,
-            isLoggedIn: false,
-            exist: false //indicates if user exist in realtime database
+            isLoggedIn: false
         }
     }
 
     componentDidMount() {
         let _this = this;
-        store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
-            _this.setState({isReady: true, exist, isLoggedIn});
+        store.dispatch(checkLoginStatus((isLoggedIn) => {
+            _this.setState({isReady: true, isLoggedIn});
         }));
+    }
+
+    renderAddButton(props) {
+        return (
+            <NavButton onPress={Actions.NewQuote}
+                       name={"plus"} type={"entypo"}
+                       color={color.black}/>
+        )
+    }
+
+    renderCloseButton(props) {
+        return (
+            <NavButton onPress={Actions.pop}
+                       name={"md-close"}
+                       type={"ionicon"}
+                       color={color.black}/>
+        )
+    }
+
+    renderSaveButton(props) {
+        if (props.showButton) return (<SaveButton data={props.data}/>)
+        else return null
     }
 
     render() {
@@ -42,22 +67,32 @@ export default class extends React.Component {
 
         return (
             <Router>
-                <Scene key="root" hideNavBar
-                       navigationBarStyle={{backgroundColor: "#fff"}}
-                       titleStyle={navTitleStyle}
-                       backButtonTintColor={color.black}>
-                    <Stack key="Auth" initial={!this.state.isLoggedIn}>
-                        <Scene key="Welcome" component={Welcome} title="" initial={true} hideNavBar/>
-                        <Scene key="Register" component={Register} title="Register" back/>
-                        <Scene key="CompleteProfile" component={CompleteProfile} title="Select Username" back={false}/>
-                        <Scene key="Login" component={Login} title="Login"/>
-                        <Scene key="ForgotPassword" component={ForgotPassword} title="Forgot Password"/>
-                    </Stack>
+                <Modal>
+                    <Scene key="root" hideNavBar
+                           navigationBarStyle={{backgroundColor: "#fff"}}
+                           titleStyle={navTitleStyle}
+                           backButtonTintColor={color.black}>
+                        <Stack key="Auth" initial={!this.state.isLoggedIn}>
+                            <Scene key="Welcome" component={Welcome} title="" initial={true} hideNavBar/>
+                            <Scene key="Register" component={Register} title="Register" back/>
+                            <Scene key="CompleteProfile" component={CompleteProfile} title="Select Username"
+                                   back={false}/>
+                            <Scene key="Login" component={Login} title="Login"/>
+                            <Scene key="ForgotPassword" component={ForgotPassword} title="Forgot Password"/>
+                        </Stack>
 
-                    <Stack key="Main" initial={this.state.isLoggedIn}>
-                        <Scene key="Home" component={Home} title="Home" initial={true} type={ActionConst.REPLACE}/>
-                    </Stack>
-                </Scene>
+                        <Stack key="Main" initial={this.state.isLoggedIn}>
+                            <Scene key="Home" component={Home} title="Home" initial={true} type={ActionConst.REPLACE}
+                                   renderRightButton={this.renderAddButton}/>
+                        </Stack>
+                    </Scene>
+                    <Scene key="NewQuote"
+                           navigationBarStyle={{backgroundColor: "#fff"}}
+                           titleStyle={navTitleStyle}
+                           component={NewQuote} title="New Quote"
+                           renderLeftButton={this.renderCloseButton}
+                           renderRightButton={this.renderSaveButton}/>
+                </Modal>
             </Router>
         )
     }

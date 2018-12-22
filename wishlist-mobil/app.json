@@ -31,6 +31,7 @@
     "facebookDisplayName": "SwagList",
     "android": {
       "package": "de.klingbeil.swaglist"
-    }
+    },
+    "description": ""
   }
 }

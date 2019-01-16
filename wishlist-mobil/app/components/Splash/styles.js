@@ -10,27 +10,27 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: color.white
+        backgroundColor: "#FF553F"
     },
 
-    wrapper:{
-        paddingHorizontal:15,
+    wrapper: {
+        paddingHorizontal: 15,
         paddingBottom: padding * 2,
-        justifyContent:"center",
-        alignItems:"center"
+        justifyContent: "center",
+        alignItems: "center"
     },
 
-    image:{
+    image: {
         height: 100,
         width: 100,
-        backgroundColor: color.grey,
+        backgroundColor: "#FF553F",
         marginBottom: padding,
         resizeMode
     },
 
     title: {
-        fontSize:fontSize.large + 5,
-        lineHeight:fontSize.large + 7,
+        fontSize: fontSize.large + 5,
+        lineHeight: fontSize.large + 7,
         fontFamily: fontFamily.medium,
         color: "#FF553F",
         letterSpacing: 1

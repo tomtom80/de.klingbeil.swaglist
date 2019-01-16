@@ -20,16 +20,13 @@ class Welcome extends React.Component {
         const options = { permissions: ['public_profile', 'email'], }
         const { type, token } = await Facebook.logInWithReadPermissionsAsync(c.FACEBOOK_APP_ID, options);
 
-        console.log(type)
-        console.log(token)
-
         if (type === 'success') {
             this.props.signInWithFacebook(token)
                 .then(({ exists, user }) => {
                     if (exists) Actions.Main()
                     else Actions.CompleteProfile({ user })
                 })
-                .catch((error) => alert(error.message))
+                .catch((error) =>{ alert(error.message)})
         }
     }
 

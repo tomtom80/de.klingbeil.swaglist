@@ -1,9 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types'
-
 import { View, TouchableOpacity } from 'react-native';
-
 import {Icon} from 'react-native-elements'
 
 import styles from "./styles"

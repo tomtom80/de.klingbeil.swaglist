@@ -10,7 +10,7 @@ export default class extends React.Component {
             <View style={styles.container}>
                 <View style={styles.wrapper}>
                     <Image style={styles.image} source={{uri: "https://img.icons8.com/ios/100/000000/modern-razor.png"}}/>
-                    <Text style={styles.title}>A Project for Fun</Text>
+                    <Text style={styles.title}>SwagList</Text>
                 </View>
                 <View style={styles.activityIndicatorContainer}>
                     <ActivityIndicator animating={true}/>

@@ -1,4 +1,4 @@
-package de.klingbeil.wishlist.wishlists.command;
+package de.klingbeil.wishlist.wishes.command;
 
 import org.axonframework.common.caching.Cache;
 import org.axonframework.eventsourcing.EventSourcingRepository;
@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("command")
-public class WishlistCommandConfiguration {
+public class WishCommandConfiguration {
 	@Bean
-	public Repository<Wishlist> wishlistRepository(EventStore eventStore, Cache cache) {
-		return EventSourcingRepository.builder(Wishlist.class).cache(cache).eventStore(eventStore).build();
+	public Repository<Wish> wishRepository(EventStore eventStore, Cache cache) {
+		return EventSourcingRepository.builder(Wish.class).cache(cache).eventStore(eventStore).build();
 	}
-
 }

@@ -31,8 +31,9 @@ data class WishPriorityIncreased(
 	val wishlistId: WishlistId
 ) : WishEvent(wishId)
 
-
 data class WishPriorityDecreased(
 	override val wishId: WishId,
 	val wishlistId: WishlistId
 ) : WishEvent(wishId)
+
+

@@ -33,6 +33,9 @@
 		<module>users-query</module>
 		<module>application</module>
 		<module>wishlists-query</module>
+		<module>wishes</module>
+		<module>crawler</module>
+		<module>wishes-query</module>
 	</modules>
 
 

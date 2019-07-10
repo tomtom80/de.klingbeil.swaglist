@@ -2,6 +2,7 @@ package de.klingbeil.wishlist.core.api.wishes
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 import de.klingbeil.wishlist.core.api.wishlist.WishlistId
+import java.net.URL
 
 abstract class WishCommand(@TargetAggregateIdentifier open val wishId: WishId)
 
@@ -21,7 +22,9 @@ data class WishUpdateCommand(
 	val wishlistId: WishlistId,
 	val wishName: String,
 	val wishDescription: String,
-	val wishLocation: String 
+	val wishLocation: String,
+	val wishLocationUrl: URL,
+	val wishImageUrl: URL
 ): WishCommand(wishId)
 
 

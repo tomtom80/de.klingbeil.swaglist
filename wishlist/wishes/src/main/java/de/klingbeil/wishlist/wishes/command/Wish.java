@@ -1,6 +1,7 @@
 package de.klingbeil.wishlist.wishes.command;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
+import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.axonframework.commandhandling.CommandHandler;
@@ -9,8 +10,10 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import de.klingbeil.wishlist.core.api.wishes.AddWishToWishlistCommand;
+import de.klingbeil.wishlist.core.api.wishes.RemoveWishFromWishlistCommand;
 import de.klingbeil.wishlist.core.api.wishes.WishId;
 import de.klingbeil.wishlist.core.api.wishes.WishNameAddedEvent;
+import de.klingbeil.wishlist.core.api.wishes.WishRemovedFromWishlistEvent;
 import de.klingbeil.wishlist.core.api.wishes.WishUpdateCommand;
 import de.klingbeil.wishlist.core.api.wishes.WishUpdatedEvent;
 import de.klingbeil.wishlist.core.api.wishes.WishUrlAddedEvent;
@@ -21,8 +24,6 @@ public class Wish {
 
 	@AggregateIdentifier
 	private WishId wishId;
-
-	@SuppressWarnings("unused")
 	private WishlistId wishlistId;
 	@SuppressWarnings("unused")
 	private String wishName;
@@ -49,7 +50,12 @@ public class Wish {
 	@CommandHandler
 	public void handle(WishUpdateCommand command) {
 		apply(new WishUpdatedEvent(wishId, command.getWishlistId(), command.getWishName(), command.getWishDescription(),
-				command.getWishLocation()));
+				command.getWishLocation(), command.getWishLocationUrl(), command.getWishImageUrl()));
+	}
+
+	@CommandHandler
+	public void handle(RemoveWishFromWishlistCommand command) {
+		apply(new WishRemovedFromWishlistEvent(wishId, wishlistId));
 	}
 
 	@EventSourcingHandler
@@ -70,6 +76,11 @@ public class Wish {
 		wishName = event.getWishName();
 		wishDescription = event.getWishDescrition();
 		wishLocation = event.getWishLocation();
+	}
+
+	@EventSourcingHandler
+	public void on(WishRemovedFromWishlistEvent event) {
+		markDeleted();
 	}
 
 }

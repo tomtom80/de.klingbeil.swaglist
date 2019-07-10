@@ -1,5 +1,6 @@
 package de.klingbeil.wishlist.wishes.query;
 
+import java.net.URL;
 import java.util.List;
 
 import org.axonframework.config.ProcessingGroup;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.klingbeil.wishlist.core.api.wishes.WishNameAddedEvent;
+import de.klingbeil.wishlist.core.api.wishes.WishRemovedFromWishlistEvent;
 import de.klingbeil.wishlist.core.api.wishes.WishUpdatedEvent;
 import de.klingbeil.wishlist.core.api.wishes.WishUrlAddedEvent;
 
@@ -25,19 +27,29 @@ public class WishEventHandler {
 	@EventHandler
 	public void on(WishNameAddedEvent event) {
 		wishRepository.save(new WishView(event.getWishId().getIdentifier(), event.getWishlistId().getIdentifier(),
-				event.getWishName(), "", ""));
+				event.getWishName(), null, null, null, null));
 	}
 
 	@EventHandler
 	public void on(WishUrlAddedEvent event) {
 		wishRepository.save(new WishView(event.getWishId().getIdentifier(), event.getWishlistId().getIdentifier(),
-				event.getWishUrl(), "", ""));
+				event.getWishUrl(), null, null, event.getWishUrl(), null));
 	}
 
 	@EventHandler
 	public void on(WishUpdatedEvent event) {
+		URL wishImageUrl = event.getWishImageUrl();
+		URL wishLocationUrl = event.getWishLocationUrl();
 		wishRepository.save(new WishView(event.getWishId().getIdentifier(), event.getWishlistId().getIdentifier(),
-				event.getWishName(), event.getWishDescrition(), event.getWishLocation()));
+				event.getWishName(), event.getWishDescrition(), event.getWishLocation(),
+				wishLocationUrl != null ? wishLocationUrl.toString() : null,
+				wishImageUrl != null ? wishImageUrl.toString() : null));
+	}
+
+	@EventHandler
+	public void on(WishRemovedFromWishlistEvent event) {
+		wishRepository.deleteByIdentifierAndWishlistId(event.getWishId().getIdentifier(),
+				event.getWishlistId().getIdentifier());
 	}
 
 	public List<WishView> getWishesForWishlist(String wishlistId) {

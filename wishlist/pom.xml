@@ -36,6 +36,7 @@
 		<module>wishes</module>
 		<module>crawler</module>
 		<module>wishes-query</module>
+		<module>wishlist-unittests</module>
 	</modules>
 
 

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventSourceCache {
 
-	@Bean
-	public Cache cache() {
-		return new WeakReferenceCache();
-	}
+  @Bean
+  public Cache cache() {
+    return new WeakReferenceCache();
+  }
 }

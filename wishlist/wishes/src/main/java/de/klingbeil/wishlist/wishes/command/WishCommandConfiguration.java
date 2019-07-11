@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("command")
 public class WishCommandConfiguration {
-	@Bean
-	public Repository<Wish> wishRepository(EventStore eventStore, Cache cache) {
-		return EventSourcingRepository.builder(Wish.class).cache(cache).eventStore(eventStore).build();
-	}
+  @Bean
+  public Repository<Wish> wishRepository(EventStore eventStore, Cache cache) {
+    return EventSourcingRepository.builder(Wish.class).cache(cache).eventStore(eventStore).build();
+  }
 }

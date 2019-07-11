@@ -11,9 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("command")
 public class WishlistCommandConfiguration {
-	@Bean
-	public Repository<Wishlist> wishlistRepository(EventStore eventStore, Cache cache) {
-		return EventSourcingRepository.builder(Wishlist.class).cache(cache).eventStore(eventStore).build();
-	}
+  @Bean
+  public Repository<Wishlist> wishlistRepository(EventStore eventStore, Cache cache) {
+    return EventSourcingRepository.builder(Wishlist.class).cache(cache).eventStore(eventStore)
+        .build();
+  }
 
 }

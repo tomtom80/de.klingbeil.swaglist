@@ -2,9 +2,9 @@ package de.klingbeil.wishlist.core.api.users;
 
 public interface UserAccount {
 
-	String getUserId();
+  String getUserId();
 
-	String getUserName();
+  String getUserName();
 
-	String getFullName();
+  String getFullName();
 }

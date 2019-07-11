@@ -21,7 +21,3 @@ data class UpdateWishlistCommand(
 data class DeleteWishlistCommand(
 	override val wishlistId: WishlistId
 ) : WishlistCommand(wishlistId)
-
-data class OpenWishlistCommand(
-	override val wishlistId: WishlistId
-) : WishlistCommand(wishlistId)

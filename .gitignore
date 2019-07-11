@@ -3,12 +3,10 @@ target/
 certs
 logs/*
 !.gitkeep
-wishlist/static/
-wishlist/react-ui/build/
+
 node_modules/
 */node_modules/
-bower_components/
-*/bower_components/
+
 tmp
 .DS_Store
 .idea

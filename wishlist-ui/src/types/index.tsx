@@ -1,3 +1,6 @@
+import { FormReducer, FormState, FormStateMap } from "redux-form";
+import { ReducersMapObject, AnyAction, Reducer } from "redux";
+
 // wishlist type
 export interface Wishlist {
     identifier: string,
@@ -13,4 +16,5 @@ export interface WishlistState {
 // application state
 export interface AppState {
     wishlists: WishlistState;
+    form: any;
 }

@@ -1,5 +1,6 @@
 import { AppState } from '../types'
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 
 import {
   wishlistReducer,
@@ -8,4 +9,5 @@ import {
 
 export const rootReducer = combineReducers<AppState>({
   wishlists: wishlistReducer,
+  form: formReducer
 });

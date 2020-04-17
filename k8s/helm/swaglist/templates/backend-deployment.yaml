@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: "{{ .Values.namespace }}-{{ .Values.tag }}"
+  name: backend
+  labels:
+{{ include "swaglist.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ .Release.Name }}-backend"
+      app.kubernetes.io/instance: "{{ .Release.Name }}-backend"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ .Release.Name }}-backend"
+        app.kubernetes.io/instance: "{{ .Release.Name }}-backend"
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "swaglist.serviceAccountName" . }}
+      securityContext:
+      {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: file-storage
+          persistentVolumeClaim:
+            claimName: file-storage
+      containers:
+        - name: "{{ .Release.Name }}-backend"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.repository }}/{{ .Values.backendImage }}:{{ .Values.tag }}"
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.backendService.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: file-storage
+              mountPath: /data/file-storage
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+          resources:
+            {{- toYaml .Values.backendResources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

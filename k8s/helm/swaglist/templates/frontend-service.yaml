@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: "{{ .Values.namespace }}-{{ .Values.tag }}"
+  name: frontend
+  labels:
+{{ include "swaglist.labels" . | indent 4 }}
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.frontendService.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: {{ .Values.frontendService.nodePort }}
+  selector:
+    app.kubernetes.io/name: "{{ .Release.Name }}-frontend"
+    app.kubernetes.io/instance: "{{ .Release.Name }}-frontend"

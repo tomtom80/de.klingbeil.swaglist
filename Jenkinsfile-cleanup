@@ -1,0 +1,51 @@
+podTemplate(label: 'swaglist-cleanup',
+    containers: [
+        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.16.1', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'curl', image: 'byrnedo/alpine-curl', command: 'cat', ttyEnabled: true)
+    ],
+    volumes: [
+        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+    ]
+) {
+
+    def name = "swaglist-" + "${SOURCE_PROJECT_NAME}".toLowerCase().replaceAll("_", "-").replaceAll("/", "-").replaceAll("%2f", "-")
+    def message = ""
+
+    node('swaglist-cleanup') {
+
+        properties([
+            buildDiscarder(logRotator(numToKeepStr: '25', artifactNumToKeepStr: '25'))
+        ])
+
+        withCredentials([
+            file(credentialsId: 'swaglist_config', variable: 'KUBECONFIG')
+        ]) {
+            try {
+                stage('helm') {
+                    container('helm') {
+                        sh "helm delete --purge '${name}'"
+                    }
+                }
+
+                stage('namespace') {
+                    container('kubectl') {
+                        sh "kubectl delete namespace '${name}'"
+                    }
+                }
+
+                message = "Successfully deleted environment " + name
+                currentBuild.result = 'SUCCESS'
+            }
+            catch (Exception error) {
+                message = "Failed to delete environment " + name
+                currentBuild.result = 'FAILURE'
+                messageColor = "#d54c53"
+                throw error
+            }
+            finally {
+            }
+
+        }
+    }
+}
